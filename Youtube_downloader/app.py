@@ -20,17 +20,30 @@ def main(page: ft.Page):
 #input para introducir un video
 #ruta de descarga en un config.json
 #Descargar solo ese video
+    def check_clicked(e):
+        #we enable the progress bar visibility
+        progress_bar_check_videos.visible = True
 
+        #trigger the script for checking the new videos
 
-    check_button=ft.FilledButton("Check New Videos")
+        #once the script is finished run a message to let the user know it has finished
+        page.snack_bar = ft.SnackBar(ft.Text(f"Finished checking if there are new videos"))
+        page.snack_bar.open = True
+        page.update()
+
+    check_button=ft.FilledButton("Check New Videos",
+                                on_click=check_clicked)
+
     download_button=ft.FilledButton("Download new videos")
-
-
+    progress_bar_check_videos = ft.ProgressRing(width=16, height=16, stroke_width = 2)
+    #we disable the progress bar until it is enabled by clicking the check videos button
+    progress_bar_check_videos.visible = False
 
     page.add(
 		title, #we define the title of the application
 		check_button,
-        download_button #we define the counter
+        download_button, #we define the counter
+        progress_bar_check_videos #progress bar for checking the videos
     )
 
 
