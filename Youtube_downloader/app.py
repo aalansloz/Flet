@@ -1,5 +1,6 @@
 import flet as ft
 import time
+import youtube
 
 def main(page: ft.Page):
 
@@ -39,13 +40,25 @@ def main(page: ft.Page):
     #we disable the progress bar until it is enabled by clicking the check videos button
     progress_bar_check_videos.visible = False
 
+    tf_youtube_channel_id = ft.TextField(label="Input for getting the channel ID",
+                                         value="Youtube channel to get ID")
+    bt_youtube_channel_id=ft.FilledButton("Get the ID")
+
+    add_buttons=ft.Row(
+            controls=[
+                tf_youtube_channel_id,
+				bt_youtube_channel_id,
+            ],alignment ="center")
+
+
     page.add(
 		title, #we define the title of the application
 		check_button,
         download_button, #we define the counter
-        progress_bar_check_videos #progress bar for checking the videos
+        progress_bar_check_videos, #progress bar for checking the videos,
+        add_buttons
+
     )
 
 
 ft.app(target = main)
-
