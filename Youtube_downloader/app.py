@@ -42,12 +42,40 @@ def main(page: ft.Page):
 
     tf_youtube_channel_id = ft.TextField(label="Input for getting the channel ID",
                                          value="Youtube channel to get ID")
-    bt_youtube_channel_id=ft.FilledButton("Get the ID")
+
+    #get as value for here !!!!!! the input from the text value from the user
+    def id_clicked(e):
+        #we enable the chip to display the ID,and we also update the value of the chip with the respective ID
+        cp_youtube_channel_id.visible = True
+        cp_youtube_channel_id.label.value=youtube.get_youtube_channel_ID('midulive')
+        page.update() 
+
+
+    bt_youtube_channel_id=ft.FilledButton("Get the ID",
+                            on_click=id_clicked)
+
+  
+    
+
+    #copiar al portapapeles el ID cuando se clike sobre el
+    #y lo hacemos visible
+    def chip_selected(e):
+        page.update()
+
+    cp_youtube_channel_id=ft.Chip(
+                label=ft.Text(''),
+                bgcolor=ft.colors.BLACK,
+                disabled_color=ft.colors.GREEN_100,
+                autofocus=True,
+                on_select=chip_selected,
+            )
+    cp_youtube_channel_id.visible = False
 
     add_buttons=ft.Row(
             controls=[
                 tf_youtube_channel_id,
 				bt_youtube_channel_id,
+                cp_youtube_channel_id,
             ],alignment ="center")
 
 
