@@ -1,7 +1,7 @@
 import flet as ft
 import time
 import youtube
-
+import os
 def main(page: ft.Page):
 
     #setting my page
@@ -21,11 +21,12 @@ def main(page: ft.Page):
 #input para introducir un video
 #ruta de descarga en un config.json
 #Descargar solo ese video
+
     def check_clicked(e):
         #we enable the progress bar visibility
         progress_bar_check_videos.visible = True
 
-        #trigger the script for checking the new videos
+        #trigger the script for checking the new videos and enabling the image
 
         #once the script is finished run a message to let the user know it has finished
         page.snack_bar = ft.SnackBar(ft.Text(f"Finished checking if there are new videos"))
@@ -34,6 +35,22 @@ def main(page: ft.Page):
 
     check_button=ft.FilledButton("Check New Videos",
                                 on_click=check_clicked)
+
+    path=os.getcwd()
+    img = ft.Image(
+        src=f"{path}/assets/check_green.png",
+        width=15,
+        height=15,
+        fit=ft.ImageFit.CONTAIN,
+    )
+    img.visible = False
+
+    add_checks=ft.Row(
+            controls=[
+                check_button,
+                img,
+            ],alignment ="center")
+
 
     download_button=ft.FilledButton("Download new videos")
     progress_bar_check_videos = ft.ProgressRing(width=16, height=16, stroke_width = 2)
@@ -45,9 +62,13 @@ def main(page: ft.Page):
 
     #get as value for here !!!!!! the input from the text value from the user
     def id_clicked(e):
-        #we enable the chip to display the ID,and we also update the value of the chip with the respective ID
+        #we enable the chip to display the ID
         cp_youtube_channel_id.visible = True
-        cp_youtube_channel_id.label.value=youtube.get_youtube_channel_ID('midulive')
+        #we read the input the input
+        channel_to_get_id=tf_youtube_channel_id.value
+        #we update the chip for the channel asked for the user
+        cp_youtube_channel_id.label.value=youtube.get_youtube_channel_ID(channel_to_get_id)
+        #we update the app
         page.update() 
 
 
@@ -80,8 +101,8 @@ def main(page: ft.Page):
 
 
     page.add(
-		title, #we define the title of the application
-		check_button,
+        title, #we define the title of the application
+        add_checks,
         download_button, #we define the counter
         progress_bar_check_videos, #progress bar for checking the videos,
         add_buttons
