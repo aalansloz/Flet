@@ -18,4 +18,3 @@ def get_youtube_channel_ID(youtube_handle):
     return (my_string[0:24])
 
 
-get_youtube_channel_ID('midulive')

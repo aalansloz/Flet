@@ -25,8 +25,18 @@ def main(page: ft.Page):
     def check_clicked(e):
         #we enable the progress bar visibility
         progress_bar_check_videos.visible = True
+        page.update()
+
+        #ejecutar el script de Youtube-RSS
+
+
+        time.sleep(10)
+
 
         #trigger the script for checking the new videos and enabling the image
+        img.visible = True
+        progress_bar_check_videos.visible = False
+
 
         #once the script is finished run a message to let the user know it has finished
         page.snack_bar = ft.SnackBar(ft.Text(f"Finished checking if there are new videos"))
@@ -51,9 +61,9 @@ def main(page: ft.Page):
                 img,
             ],alignment ="center")
 
+    progress_bar_check_videos = ft.ProgressRing(width=16, height=16, stroke_width = 2)
 
     download_button=ft.FilledButton("Download new videos")
-    progress_bar_check_videos = ft.ProgressRing(width=16, height=16, stroke_width = 2)
     #we disable the progress bar until it is enabled by clicking the check videos button
     progress_bar_check_videos.visible = False
 
@@ -103,8 +113,8 @@ def main(page: ft.Page):
     page.add(
         title, #we define the title of the application
         add_checks,
-        download_button, #we define the counter
         progress_bar_check_videos, #progress bar for checking the videos,
+        download_button, #we define the counter
         add_buttons
 
     )
