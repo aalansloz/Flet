@@ -2,6 +2,9 @@ import flet as ft
 import time
 import youtube
 import os
+from RSS import app
+import pandas as pd
+
 def main(page: ft.Page):
 
     #setting my page
@@ -30,7 +33,7 @@ def main(page: ft.Page):
         #ejecutar el script de Youtube-RSS
 
 
-        time.sleep(10)
+        app.main()
 
 
         #trigger the script for checking the new videos and enabling the image
@@ -63,7 +66,24 @@ def main(page: ft.Page):
 
     progress_bar_check_videos = ft.ProgressRing(width=16, height=16, stroke_width = 2)
 
-    download_button=ft.FilledButton("Download new videos")
+    def youtube_download(e):
+
+        import pyperclip
+        #leemos el excel y copiamos cada enlace
+        path = os.getcwd()
+        path_full_feed=f'{path}//RSS'
+        df=pd.read_csv(f'{path_full_feed}//new_videos.csv')
+        #we get the second column the one from the videos
+        videos = df.iloc[:, 1]
+
+        copied_links=''
+        for video in videos:
+            copied_links = copied_links + f'{video}\n'
+        pyperclip.copy(copied_links)
+
+
+    download_button=ft.FilledButton("Download new videos",on_click=youtube_download)
+
     #we disable the progress bar until it is enabled by clicking the check videos button
     progress_bar_check_videos.visible = False
 

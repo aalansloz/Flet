@@ -16,5 +16,3 @@ def get_youtube_channel_ID(youtube_handle):
 
     my_string = ' '.join(map(str, matches))  # This handles non-string elements in the list
     return (my_string[0:24])
-
-
