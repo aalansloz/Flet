@@ -105,8 +105,6 @@ def main(page: ft.Page):
     bt_youtube_channel_id=ft.FilledButton("Get the ID",
                             on_click=id_clicked)
 
-  
-    
 
     #copiar al portapapeles el ID cuando se clike sobre el
     #y lo hacemos visible
@@ -129,14 +127,98 @@ def main(page: ft.Page):
                 cp_youtube_channel_id,
             ],alignment ="center")
 
+    def list_suscriptions(e):
+        card_list.visible=True
+        page.update()
+
+
+    def hide_suscriptions(e):
+        card_list.visible=False
+        page.update()
+
+    bt_list_suscriptions=ft.FilledButton("Show list of subscriptions",
+                            on_click=list_suscriptions)
+
+    bt_hide_suscriptions=ft.FilledButton("Hide list of subscriptions",
+                            on_click=hide_suscriptions)
+
+    add_buttons_list=ft.Row(
+            controls=[
+                bt_list_suscriptions,
+				bt_hide_suscriptions,
+            ],alignment ="center")
+
+#hacer que este listado sea el bueno leido del dataframe,
+# asi como añadir una opcion que me ejecute el code colab
+
+    card_list=ft.Card(
+            content=ft.Container(
+                width=500,
+                content=ft.Column(
+                    [
+                        ft.ListTile(
+                            title=ft.Text("One-line list tile"),
+                        ),
+                        ft.ListTile(title=ft.Text("One-line dense list tile"), dense=True),
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.SETTINGS),
+                            title=ft.Text("One-line selected list tile"),
+                            selected=True,
+                        ),
+                        ft.ListTile(
+                            leading=ft.Image(src="/icons/icon-192.png", fit="contain"),
+                            title=ft.Text("One-line with leading control"),
+                        ),
+                        ft.ListTile(
+                            title=ft.Text("One-line with trailing control"),
+                            trailing=ft.PopupMenuButton(
+                                icon=ft.icons.MORE_VERT,
+                                items=[
+                                    ft.PopupMenuItem(text="Item 1"),
+                                    ft.PopupMenuItem(text="Item 2"),
+                                ],
+                            ),
+                        ),
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.ALBUM),
+                            title=ft.Text("One-line with leading and trailing controls"),
+                            trailing=ft.PopupMenuButton(
+                                icon=ft.icons.MORE_VERT,
+                                items=[
+                                    ft.PopupMenuItem(text="Item 1"),
+                                    ft.PopupMenuItem(text="Item 2"),
+                                ],
+                            ),
+                        ),
+                        ft.ListTile(
+                            leading=ft.Icon(ft.icons.SNOOZE),
+                            title=ft.Text("Two-line with leading and trailing controls"),
+                            subtitle=ft.Text("Here is a second title."),
+                            trailing=ft.PopupMenuButton(
+                                icon=ft.icons.MORE_VERT,
+                                items=[
+                                    ft.PopupMenuItem(text="Item 1"),
+                                    ft.PopupMenuItem(text="Item 2"),
+                                ],
+                            ),
+                        ),
+                    ],
+                    spacing=0,
+                ),
+                padding=ft.padding.symmetric(vertical=10),
+            )
+    )
+
+    card_list.visible=False
 
     page.add(
         title, #we define the title of the application
         add_checks,
         progress_bar_check_videos, #progress bar for checking the videos,
         download_button, #we define the counter
-        add_buttons
-
+        add_buttons,
+        add_buttons_list,
+        card_list
     )
 
 
