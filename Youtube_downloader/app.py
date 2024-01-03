@@ -128,12 +128,12 @@ def main(page: ft.Page):
             ],alignment ="center")
 
     def list_suscriptions(e):
-        card_list.visible=True
+        name_list.visible=True
         page.update()
 
 
     def hide_suscriptions(e):
-        card_list.visible=False
+        name_list.visible=False
         page.update()
 
     bt_list_suscriptions=ft.FilledButton("Show list of subscriptions",
@@ -148,30 +148,20 @@ def main(page: ft.Page):
 				bt_hide_suscriptions,
             ],alignment ="center")
 
-#hacer que este listado sea el bueno leido del dataframe,
+#añadir una nueva fuente al dataframe
 # asi como añadir una opcion que me ejecute el code colab
     path = os.getcwd()
     path_full_feed=f'{path}//RSS'
     feeds_file=pd.read_excel(f'{path_full_feed}//Feeds.xls')
-    #names is feeds_file['Name']
-    card_list=ft.Card(
-            content=ft.Container(
-                width=500,
-                content=ft.Column(
-                    [
-                        ft.ListTile(
-                            leading=ft.Icon(ft.icons.SETTINGS),
-                            title=ft.Text("One-line selected list tile"),
-                            selected=True,
-                        ),
-                    ],
-                    spacing=0,
-                ),
-                padding=ft.padding.symmetric(vertical=10),
-            )
-    )
 
-    card_list.visible=False
+    name_list = ft.ListView(spacing=10, padding=20, auto_scroll=True, height=300)
+
+    for name in feeds_file['Name']:
+        name_list.controls.append(ft.Text(f"{name}"))
+
+
+
+    name_list.visible=False
 
     page.add(
         title, #we define the title of the application
@@ -180,7 +170,7 @@ def main(page: ft.Page):
         download_button, #we define the counter
         add_buttons,
         add_buttons_list,
-        card_list
+        name_list
     )
 
 
